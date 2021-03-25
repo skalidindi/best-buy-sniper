@@ -417,9 +417,9 @@ export class BestBuy {
 
     // *** UNCOMMENT THIS SECTION TO ENABLE AUTO-CHECKOUT ***
 
-    // if (!!placeOrderButton) {
-    //   await page.click('.button--place-order button.btn-primary');
-    // }
+    if (!!placeOrderButton) {
+      await page.click('.button--place-order button.btn-primary');
+    }
 
     await wait(3000);
 
@@ -503,10 +503,20 @@ export class BestBuy {
     await page.type('#credit-card-cvv', paymentInformation.cvv);
     await page.type('[id="payment.billingAddress.firstName"]', paymentInformation.firstName);
     await page.type('[id="payment.billingAddress.lastName"]', paymentInformation.lastName);
+
+    const hideSuggestionsButton = await page.$('.autocomplete__wrapper .autocomplete__toggle');
+    const hideSuggestionsButtonTextContent = await hideSuggestionsButton?.textContent();
+
+    if (hideSuggestionsButtonTextContent?.trim().toLocaleLowerCase() === 'hide suggestions') {
+      await page.click('.autocomplete__wrapper .autocomplete__toggle');
+    }
+
     await page.type('[id="payment.billingAddress.street"]', paymentInformation.address);
     await page.type('[id="payment.billingAddress.city"]', paymentInformation.city);
-    await page.type('[id="payment.billingAddress.state"]', paymentInformation.state);
+    await page.selectOption('[id="payment.billingAddress.state"]', paymentInformation.state);
     await page.type('[id="payment.billingAddress.zipcode"]', paymentInformation.zipcode);
+
+    await page.type('[id="create-account-password-form-show-password"]', paymentInformation.password);
 
     logger.info('Payment information completed');
   }

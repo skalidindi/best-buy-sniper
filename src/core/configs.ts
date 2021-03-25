@@ -27,6 +27,7 @@ export interface PaymentInformation {
   lastName: string;
   state: string;
   zipcode: string;
+  password: string;
 }
 
 export const getTasks = () => {

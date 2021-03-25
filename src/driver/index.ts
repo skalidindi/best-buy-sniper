@@ -7,10 +7,9 @@ export const createBrowser = async (): Promise<Browser> => {
   const options = {
     headless: false, // false to see the browser UI.
     ignoreHTTPSErrors: true,
-    defaultViewport: { width: 1920, height: 1080 }
+    defaultViewport: null,
   };
 
-  // browser = await firefox.launch(options);
   browser = await chromium.launch(options);
 
   return browser;

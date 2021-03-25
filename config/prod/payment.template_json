@@ -8,5 +8,6 @@
   "address": "2485 Augustine Drive",
   "city": "Santa Clara",
   "state": "CA",
-  "zipcode": "95050"
+  "zipcode": "95050",
+  "password": "some_temp_password"
 }

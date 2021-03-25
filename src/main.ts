@@ -19,7 +19,7 @@ const main = async () => {
     process.exit(2);
   }
 
-  sendMessage({message: "BestBuy Sniper started..."})
+  // sendMessage({message: "BestBuy Sniper started..."})
 
   const bestbuy = new BestBuy({ products: bestbuyConfig.products });
   let purchaseCompleted = false;
@@ -31,24 +31,24 @@ const main = async () => {
   try {
     do {
       purchaseCompleted = await bestbuy.purchaseProduct();
-  
+
       if (!purchaseCompleted) {
         const waitTime = random(30000, 90000);
-  
+
         logger.warn(`Purchase not completed, waiting ${waitTime} ms before retrying`);
-  
+
         await wait(waitTime);
       }
     } while (!purchaseCompleted);
-  
+
     logger.info('Shutting down in 1 minute');
-  
+
     await Promise.all([
       await sendMessage({ message: 'Shutting down in 1 minute' }),
     ]);
-  
+
     await wait(60000);
-    
+
     await bestbuy.close();
 
     return true;
